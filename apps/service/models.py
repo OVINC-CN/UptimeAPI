@@ -33,3 +33,6 @@ class Service(BaseModel):
         verbose_name = gettext_lazy("Service")
         verbose_name_plural = verbose_name
         ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.name}"

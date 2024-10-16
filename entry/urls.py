@@ -24,6 +24,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("account/", include("ovinc_client.account.urls")),
     path("", include("apps.home.urls")),
+    path("", include("apps.service.urls")),
+    path("", include("apps.monitor.urls")),
     path("", include("ovinc_client.trace.urls")),
 ]
 

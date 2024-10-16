@@ -12,10 +12,4 @@ app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks()
 
 # Schedule Tasks
-app.conf.beat_schedule = {
-    "celery_debug": {
-        "task": "apps.cel.tasks.debug.celery_debug",
-        "schedule": crontab(minute="*"),
-        "args": (),
-    },
-}
+app.conf.beat_schedule = {}
