@@ -1,0 +1,24 @@
+# ovinc
+ovinc-client==0.3.11
+
+# Celery
+celery==5.4.0
+
+# Async
+asgiref==3.8.1
+channels[daphne]==4.1.0
+channels_redis==4.2.0
+
+# Server
+gunicorn==22.0.0
+uvicorn-worker==0.2.0
+uvicorn==0.30.1
+
+# Datetime
+arrow==1.2.3
+
+# RSA
+pycryptodome==3.20.0
+
+# tcloud
+tencentcloud-sdk-python==3.0.785

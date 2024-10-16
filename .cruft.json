@@ -1,0 +1,15 @@
+{
+  "template": "https://github.com/OVINC-CN/DevTemplateDjango.git",
+  "commit": "08598db692d59c18a2301d5342152b2e3a141ff5",
+  "checkout": "main",
+  "context": {
+    "cookiecutter": {
+      "project_name": "UptimeAPI",
+      "_copy_without_render": [
+        ".github"
+      ],
+      "_template": "https://github.com/OVINC-CN/DevTemplateDjango.git"
+    }
+  },
+  "directory": null
+}
