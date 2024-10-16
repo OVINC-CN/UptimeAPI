@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     "ovinc_client.trace",
     "apps.cel",
     "apps.home",
+    "apps.monitor",
+    "apps.service",
 ]
 
 # MIDDLEWARE
