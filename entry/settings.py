@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     "ovinc_client.trace",
     "apps.cel",
     "apps.home",
+    "apps.monitor",
+    "apps.service",
 ]
 
 # MIDDLEWARE
@@ -170,7 +172,7 @@ LOGGING = get_logging_config_dict(LOG_LEVEL, LOG_DIR)
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ["ovinc_client.core.renderers.APIRenderer"],
     "DEFAULT_PAGINATION_CLASS": "ovinc_client.core.paginations.NumPagination",
-    "DATETIME_FORMAT": "%Y-%m-%dT%H:%M%z",
+    "DATETIME_FORMAT": "%Y-%m-%d %H:%M:%S",
     "DEFAULT_THROTTLE_RATES": {},
     "EXCEPTION_HANDLER": "ovinc_client.core.exceptions.exception_handler",
     "UNAUTHENTICATED_USER": "ovinc_client.account.models.CustomAnonymousUser",
@@ -213,3 +215,16 @@ CAPTCHA_ENABLED = strtobool(os.getenv("CAPTCHA_ENABLED", "False"))
 CAPTCHA_APP_ID = int(os.getenv("CAPTCHA_APP_ID", "0"))
 CAPTCHA_APP_SECRET = os.getenv("CAPTCHA_APP_SECRET", "")
 CAPTCHA_APP_INFO_TIMEOUT = int(os.getenv("CAPTCHA_APP_INFO_TIMEOUT", str(60 * 10)))
+
+# Monitor
+MONITOR_CHECK_MIN_SLEEP_TIME = int(os.getenv("MONITOR_CHECK_MIN_SLEEP_TIME", "1"))
+MONITOR_CHECK_MAX_SLEEP_TIME = int(os.getenv("MONITOR_CHECK_MAX_SLEEP_TIME", "60"))
+MONITOR_CHECK_INTERVAL_MIN = int(os.getenv("MONITOR_CHECK_INTERVAL_MIN", "10"))
+MONITOR_CHECK_INTERVAL_MAX = int(os.getenv("MONITOR_CHECK_INTERVAL_MAX", str(60 * 60)))
+MONITOR_CHECK_TIMEOUT_MIN = int(os.getenv("MONITTOT_CHECK_TIMEOUT_MIN", "1"))
+MONITOR_CHECK_TIMEOUT_MAX = int(os.getenv("MONITTOT_CHECK_TIMEOUT_MAX", "60"))
+MONITOR_CHECK_RETRY_MIN = int(os.getenv("MONITOR_CHECK_RETRY_MIN", "0"))
+MONITOR_CHECK_RETRY_MAX = int(os.getenv("MONITOR_CHECK_RETRY_MAX", "10"))
+
+# Status
+SVC_STATUS_MAX_TIME_RANGE_DAYS = int(os.getenv("SVC_STATUS_MAX_TIME_RANGE_DAYS", "7"))

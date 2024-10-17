@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-13 11:24+0800\n"
+"POT-Creation-Date: 2024-10-17 19:04+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,130 +18,145 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: apps/account/apps.py:8
-msgid "User Account"
-msgstr "用户账户"
-
-#: apps/account/constants.py:21
-msgid "Personal"
-msgstr "个人"
-
-#: apps/account/constants.py:22
-msgid "Platform"
-msgstr "平台"
-
-#: apps/account/constants.py:30
-msgid "Avatar"
-msgstr "头像"
-
-#: apps/account/constants.py:31
-msgid "Phone Number"
-msgstr "联系电话"
-
-#: apps/account/constants.py:32
-msgid "Mail Address"
-msgstr "邮件地址"
-
-#: apps/account/models.py:22
-msgid "Username Cannot be Empty"
-msgstr "用户名不能为空"
-
-#: apps/account/models.py:39
-msgid "username"
-msgstr "用户名"
-
-#: apps/account/models.py:43
-msgid "already in use"
-msgstr "已被占用"
-
-#: apps/account/models.py:45
-msgid "Nick Name"
-msgstr "用户昵称"
-
-#: apps/account/models.py:47
-msgid "User Type"
-msgstr "用户类型"
-
-#: apps/account/models.py:52
-msgid "Date Joined"
-msgstr "注册时间"
-
-#: apps/account/models.py:59
-msgid "User"
-msgstr "用户"
-
-#: apps/home/apps.py:8
 msgid "Home Module"
 msgstr "首页"
 
-#: apps/home/exceptions.py:8
 msgid "Language Code Invalid"
 msgstr "语言ID非法"
 
-#: apps/home/serializers.py:12
 msgid "Language Code"
 msgstr "语言ID"
 
-#: apps/trace/apps.py:11
-msgid "App Performance"
-msgstr "应用性能"
+msgid "Monitor Module"
+msgstr "监控模块"
 
-#: core/constants.py:30
-msgid "LIST"
-msgstr "LIST"
+msgid "HTTP"
+msgstr "HTTP"
 
-#: core/constants.py:31
-msgid "CREATE"
-msgstr "CREATE"
+msgid "Online"
+msgstr "在线"
 
-#: core/constants.py:32
-msgid "UPDATE"
-msgstr "UPDATE"
+msgid "Offline"
+msgstr "离线"
 
-#: core/constants.py:33
-msgid "PARTIAL_UPDATE"
-msgstr "PARTIAL_UPDATE"
+msgid "Timeout"
+msgstr "超时"
 
-#: core/constants.py:34
-msgid "DESTROY"
-msgstr "DESTROY"
+msgid "Unknown"
+msgstr "未知"
 
-#: core/exceptions.py:54
-msgid "Request Failed"
-msgstr "请求失败"
+msgid "GET"
+msgstr "GET"
 
-#: core/exceptions.py:118
-msgid "Server Error"
-msgstr "服务错误"
+#, python-format
+msgid "request timeout after %ds"
+msgstr "请求在%d秒后超时"
 
-#: core/exceptions.py:123
-msgid "Login Required"
-msgstr "未登录"
+#, python-format
+msgid "response with status %d"
+msgstr "响应状态码为%d"
 
-#: core/exceptions.py:128
-msgid "Login Failed"
-msgstr "登录失败"
+msgid "ID"
+msgstr "ID"
 
-#: core/exceptions.py:133
-msgid "Permission Denied"
-msgstr "未经授权访问"
+msgid "Service"
+msgstr "服务"
 
-#: core/exceptions.py:138
-msgid "Operate Error"
-msgstr "异常操作"
+msgid "Timestamp(s)"
+msgstr "时间戳(秒)"
 
-#: core/exceptions.py:143
-msgid "Resource Not Found"
-msgstr "资源未找到"
+msgid "Time"
+msgstr "时间"
 
-#: core/exceptions.py:148
-msgid "Service Closed"
-msgstr "服务维护中"
+msgid "Status"
+msgstr "状态"
 
-#: core/models.py:192
-msgid "Soft Delete"
-msgstr "软删除"
+msgid "Status Message"
+msgstr "状态信息"
 
-#: core/paginations.py:19
-msgid "Invalid Page Number"
-msgstr "页码有误"
+msgid "Duration(ms)"
+msgstr "耗时(毫秒)"
+
+msgid "Extra"
+msgstr "拓展"
+
+msgid "Service Status"
+msgstr "服务状态"
+
+msgid "Check Type"
+msgstr "检查类型"
+
+msgid "Check Interval (s)"
+msgstr "检查周期(秒)"
+
+msgid "Check Timeout (s)"
+msgstr "检查超时时间(秒)"
+
+msgid "Check Retry"
+msgstr "检查重试次数"
+
+msgid "Is Enabled"
+msgstr "是否启用"
+
+msgid "Last Schedule Time"
+msgstr "最后调度时间"
+
+msgid "Updated By"
+msgstr "更新人"
+
+msgid "Updated At"
+msgstr "更新时间"
+
+msgid "Created By"
+msgstr "创建人"
+
+msgid "Created At"
+msgstr "创建时间"
+
+msgid "HTTP Method"
+msgstr "请求方法"
+
+msgid "HTTP URL"
+msgstr "请求URL"
+
+msgid "HTTP Headers"
+msgstr "请求头"
+
+msgid "Follow Redirect"
+msgstr "跟随重定向"
+
+msgid "HTTP Success Status Code"
+msgstr "成功状态码"
+
+msgid "Monitor Config"
+msgstr "监控配置"
+
+msgid "Search Keyword"
+msgstr "搜索关键词"
+
+msgid "Start Time"
+msgstr "开始时间"
+
+msgid "End Time"
+msgstr "结束时间"
+
+#, python-format
+msgid "time range longer than %d days"
+msgstr "时间范围超过%d天"
+
+#, python-format
+msgid "invalid check type %s"
+msgstr "未知的探测类型 %s"
+
+msgid "Service Module"
+msgstr "服务模块"
+
+msgid "Service Name"
+msgstr "服务名"
+
+msgid "Is Public"
+msgstr "是否公开"
+
+#, python-format
+msgid "Service with name '%s' already exists"
+msgstr "服务 '%s' 已存在"
