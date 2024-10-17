@@ -9,9 +9,10 @@ from ovinc_client.core.viewsets import (
     RetrieveMixin,
     UpdateMixin,
 )
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from apps.monitor.constants import CheckType
+from apps.monitor.constants import CheckType, HTTPMethod, OnlineStatus
 from apps.monitor.models import MonitorConfig
 from apps.monitor.serializers import (
     HTTPMonitorConfigSerializer,
@@ -21,6 +22,7 @@ from apps.monitor.serializers import (
     MonitorConfigListSerializer,
 )
 from apps.permission.permissions import SuperuserPermission
+from common.utils import choices_to_list
 
 
 # pylint: disable=R0901
@@ -115,3 +117,17 @@ class MonitorConfigViewSet(ListMixin, RetrieveMixin, CreateMixin, UpdateMixin, D
         config = await database_sync_to_async(self.get_object)()
         await database_sync_to_async(config.delete)()
         return Response()
+
+    @action(methods=["GET"], detail=False)
+    def common(self, request, *args, **kwargs):
+        """
+        common constants
+        """
+
+        return Response(
+            data={
+                "check_type": choices_to_list(CheckType),
+                "online_status": choices_to_list(OnlineStatus),
+                "http_method": choices_to_list(HTTPMethod),
+            }
+        )
