@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     "apps.cel",
     "apps.home",
     "apps.monitor",
-    "apps.permission",
     "apps.service",
 ]
 
@@ -226,3 +225,6 @@ MONITOR_CHECK_TIMEOUT_MIN = int(os.getenv("MONITTOT_CHECK_TIMEOUT_MIN", "1"))
 MONITOR_CHECK_TIMEOUT_MAX = int(os.getenv("MONITTOT_CHECK_TIMEOUT_MAX", "60"))
 MONITOR_CHECK_RETRY_MIN = int(os.getenv("MONITOR_CHECK_RETRY_MIN", "0"))
 MONITOR_CHECK_RETRY_MAX = int(os.getenv("MONITOR_CHECK_RETRY_MAX", "10"))
+
+# Status
+SVC_STATUS_MAX_TIME_RANGE_DAYS = int(os.getenv("SVC_STATUS_MAX_TIME_RANGE_DAYS", "7"))

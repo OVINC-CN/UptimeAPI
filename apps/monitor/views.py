@@ -13,15 +13,18 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from apps.monitor.constants import CheckType, HTTPMethod, OnlineStatus
-from apps.monitor.models import MonitorConfig
+from apps.monitor.models import MonitorConfig, ServiceStatus
 from apps.monitor.serializers import (
     HTTPMonitorConfigSerializer,
+    ListServiceStatusSerializer,
     MonitoConfigSearchSerializer,
     MonitorConfigBaseSerializer,
     MonitorConfigInfoSerializer,
     MonitorConfigListSerializer,
+    ServiceStatusListSerializer,
 )
-from apps.permission.permissions import SuperuserPermission
+from apps.service.models import Service
+from apps.service.permissions import PublicServicePermission, SuperuserPermission
 from common.utils import choices_to_list
 
 
@@ -131,3 +134,36 @@ class MonitorConfigViewSet(ListMixin, RetrieveMixin, CreateMixin, UpdateMixin, D
                 "http_method": choices_to_list(HTTPMethod),
             }
         )
+
+
+class ServiceStatusViewSet(RetrieveMixin, MainViewSet):
+    """
+    service status viewset
+    """
+
+    queryset = Service.objects.all()
+    permission_classes = [PublicServicePermission]
+
+    async def retrieve(self, request, *args, **kwargs):
+        """
+        list service status points
+        """
+
+        # validate
+        request_serializer = ListServiceStatusSerializer(data=request.query_params)
+        request_serializer.is_valid(raise_exception=True)
+        request_data = request_serializer.validated_data
+
+        # service inst
+        service = await database_sync_to_async(self.get_object)()
+
+        # load data points
+        status_points = ServiceStatus.objects.filter(
+            service=service, timestamp__range=[request_data["start_time"], request_data["end_time"]]
+        ).order_by("timestamp")
+        points_data = await ServiceStatusListSerializer(
+            instance=status_points, many=True, context={"is_superuser": request.user.is_superuser}
+        ).adata
+
+        # response
+        return Response(data=points_data)

@@ -12,6 +12,7 @@ class Service(BaseModel):
 
     id = UniqIDField(verbose_name=gettext_lazy("ID"))
     name = models.CharField(verbose_name=gettext_lazy("Service Name"), max_length=SHORT_CHAR_LENGTH, unique=True)
+    is_public = models.BooleanField(verbose_name=gettext_lazy("Is Public"), default=False)
     updated_by = ForeignKey(
         verbose_name=gettext_lazy("Updated By"),
         to="account.User",

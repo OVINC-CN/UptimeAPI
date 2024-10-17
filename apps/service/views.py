@@ -1,5 +1,7 @@
+from typing import Dict
+
 from channels.db import database_sync_to_async
-from django.db.models import Q
+from django.db.models import Max, Q, QuerySet
 from ovinc_client.core.viewsets import (
     CreateMixin,
     DestroyMixin,
@@ -10,10 +12,10 @@ from ovinc_client.core.viewsets import (
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from apps.monitor.models import MonitorConfig
+from apps.monitor.models import MonitorConfig, ServiceStatus
 from apps.monitor.serializers import MonitorConfigInfoSerializer
-from apps.permission.permissions import SuperuserPermission
 from apps.service.models import Service
+from apps.service.permissions import SuperuserPermission
 from apps.service.serializers import (
     CreateServiceSerializer,
     ServiceInfoSerializer,
@@ -31,6 +33,11 @@ class ServiceViewSet(ListMixin, CreateMixin, UpdateMixin, DestroyMixin, MainView
     queryset = Service.objects.all()
     permission_classes = [SuperuserPermission]
 
+    def get_permissions(self):
+        if self.action in ["list"]:
+            return []
+        return super().get_permissions()
+
     async def list(self, request, *args, **kwargs):
         """
         service list
@@ -43,14 +50,46 @@ class ServiceViewSet(ListMixin, CreateMixin, UpdateMixin, DestroyMixin, MainView
 
         # build filter
         condition = Q()
+        if not request.user.is_superuser:
+            condition &= Q(is_public=True)
         if request_data.get("keyword"):
             condition &= Q(name__icontains=request_data.get("keyword"))
 
         # load from db
         queryset = Service.objects.filter(condition).prefetch_related("updated_by", "created_by")
 
+        # load status
+        record_map = await self.load_status_records(services=queryset)
+
         # response
-        return Response(data=await ServiceInfoSerializer(instance=queryset, many=True).adata)
+        return Response(
+            data=await ServiceInfoSerializer(
+                instance=queryset,
+                many=True,
+                context={"recent_status": record_map, "is_superuser": request.user.is_superuser},
+            ).adata
+        )
+
+    @database_sync_to_async
+    def load_status_records(self, services: QuerySet) -> Dict[str, ServiceStatus]:
+        """
+        load service last status
+        """
+
+        records = ServiceStatus.objects.filter(
+            id__in=[
+                i["id"]
+                for i in ServiceStatus.objects.filter(service__in=services)
+                .values("service")
+                .annotate(timestamp=Max("timestamp"), id=Max("id"))
+                .order_by()
+            ]
+        )
+        record_map = {}
+        for record in records:
+            if record.service_id not in record_map:
+                record_map[record.service_id] = record
+        return record_map
 
     async def create(self, request, *args, **kwargs):
         """

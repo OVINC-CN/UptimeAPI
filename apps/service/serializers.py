@@ -5,14 +5,35 @@ from ovinc_client.core.async_tools import SyncRunner
 from ovinc_client.core.constants import SHORT_CHAR_LENGTH
 from rest_framework import serializers
 
+from apps.monitor.constants import OnlineStatus
 from apps.service.models import Service
+
+
+class SerializerMethodField(serializers.SerializerMethodField):
+    async def ato_representation(self, *args, **kwargs):
+        return super().to_representation(*args, **kwargs)
 
 
 # pylint: disable=R0901
 class ServiceInfoSerializer(ModelSerializer):
+    status = SerializerMethodField()
+    status_msg = SerializerMethodField()
+
     class Meta:
         model = Service
-        fields = ["id", "name"]
+        fields = ["id", "name", "status", "status_msg"]
+
+    def get_status(self, service: Service):
+        status = self.context.get("recent_status", {}).get(service.id, None)
+        if status:
+            return status.status
+        return OnlineStatus.UNKNOWN
+
+    def get_status_msg(self, service: Service):
+        status = self.context.get("recent_status", {}).get(service.id, None)
+        if status and self.context.get("is_superuser", False):
+            return status.status_msg
+        return ""
 
 
 class ServiceRequestSerializer(Serializer):

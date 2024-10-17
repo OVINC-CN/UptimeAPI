@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-16 22:54+0800\n"
+"POT-Creation-Date: 2024-10-17 19:04+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -134,18 +134,28 @@ msgstr "监控配置"
 msgid "Search Keyword"
 msgstr "搜索关键词"
 
+msgid "Start Time"
+msgstr "开始时间"
+
+msgid "End Time"
+msgstr "结束时间"
+
+#, python-format
+msgid "time range longer than %d days"
+msgstr "时间范围超过%d天"
+
 #, python-format
 msgid "invalid check type %s"
 msgstr "未知的探测类型 %s"
-
-msgid "Permission Module"
-msgstr "权限模块"
 
 msgid "Service Module"
 msgstr "服务模块"
 
 msgid "Service Name"
 msgstr "服务名"
+
+msgid "Is Public"
+msgstr "是否公开"
 
 #, python-format
 msgid "Service with name '%s' already exists"

@@ -1,10 +1,10 @@
 from adrf.serializers import ModelSerializer, Serializer
 from django.conf import settings
-from django.utils.translation import gettext_lazy
+from django.utils.translation import gettext, gettext_lazy
 from rest_framework import serializers
 
 from apps.monitor.constants import HTTPMethod
-from apps.monitor.models import MonitorConfig
+from apps.monitor.models import MonitorConfig, ServiceStatus
 
 
 # pylint: disable=R0901
@@ -75,3 +75,30 @@ class HTTPMonitorConfigSerializer(MonitorConfigBaseSerializer):
             "http_follow_redirect",
             "http_check_status_code",
         ]
+
+
+class ListServiceStatusSerializer(Serializer):
+    start_time = serializers.IntegerField(label=gettext_lazy("Start Time"))
+    end_time = serializers.IntegerField(label=gettext_lazy("End Time"))
+
+    def validate(self, attrs: dict) -> dict:
+        data = super().validate(attrs)
+        if data["end_time"] - data["start_time"] > (settings.SVC_STATUS_MAX_TIME_RANGE_DAYS * 60 * 60 * 24):
+            raise serializers.ValidationError(
+                gettext("time range longer than %d days") % settings.SVC_STATUS_MAX_TIME_RANGE_DAYS
+            )
+        return data
+
+
+class ServiceStatusListSerializer(ModelSerializer):
+    duration = serializers.FloatField()
+
+    class Meta:
+        model = ServiceStatus
+        fields = ["timestamp", "status", "status_msg", "duration"]
+
+    async def ato_representation(self, instance: ServiceStatus) -> dict:
+        data = await super().ato_representation(instance)
+        if not self.context.get("is_superuser", False):
+            data["status_msg"] = ""
+        return data
